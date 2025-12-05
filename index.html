@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abdrahman | Full-Stack & IoT Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#7c3aed; --glass: rgba(255,255,255,0.03);
+      --radius:14px; --gap:18px; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(180deg,#071022 0%, #08121a 100%);color:#e6eef8;min-height:100vh}
+
+    header{position:fixed;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;backdrop-filter:blur(6px);z-index:50}
+    .logo{font-weight:700;letter-spacing:0.6px;color:var(--accent);text-decoration:none}
+
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+    nav a.active, nav a:hover{color:#fff;background:var(--glass)}
+
+    .menu-toggle{display:none;font-size:20px;cursor:pointer;color:var(--muted);padding:8px}
+
+    main{padding-top:88px;max-width:1100px;margin:0 auto}
+
+    .hero{display:grid;grid-template-columns:360px 1fr;gap:32px;align-items:center;padding:48px 22px}
+    .hero-img{width:340px;height:340px;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .hero-img img{width:100%;height:100%;object-fit:cover;display:block}
+    .hero-content h1{margin:0;font-size:28px}
+    .hero-content h1 span{color:var(--accent)}
+    .typing{color:var(--muted);margin:8px 0 18px}
+    .hero-content p{color:var(--muted);line-height:1.6}
+
+    .actions{margin-top:18px;display:flex;gap:12px;align-items:center}
+    .btn{display:inline-block;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#4f46e5);color:#fff}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+
+    .socials a{margin-right:8px;color:var(--muted);font-size:20px}
+
+    /* Sections */
+    section{padding:42px 22px;margin-top:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03)}
+
+    /* Services */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .service h3{margin:0 0 8px}
+    .service p{color:var(--muted);margin:0}
+
+    /* Skills */
+    .skill{margin-bottom:12px}
+    .skill .meta{display:flex;justify-content:space-between;font-weight:600;color:var(--muted);font-size:13px}
+    .bar{background:rgba(255,255,255,0.04);height:10px;border-radius:8px;overflow:hidden;margin-top:8px}
+    .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#4f46e5)}
+
+    /* Projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+    .project-card img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px}
+    .project-card h4{margin:0 0 6px}
+    .project-card p{color:var(--muted);font-size:14px}
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 340px;gap:18px}
+    form label{display:block;margin-bottom:6px;color:var(--muted);font-weight:600}
+    form input, form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#eaf1ff}
+    form button{margin-top:10px}
+
+    footer{padding:22px;text-align:center;color:var(--muted);font-size:14px}
+
+    /* Popup */
+    .popup{position:fixed;left:0;right:0;top:0;bottom:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center;z-index:60;visibility:hidden;opacity:0;transition:opacity .18s}
+    .popup.open{visibility:visible;opacity:1}
+    .popup .box{width:420px;background:#071426;padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;gap:18px;padding:30px 16px}
+      .hero-img{width:100%;height:260px}
+      .contact-grid{grid-template-columns:1fr}
+      nav{position:fixed;left:0;right:0;top:64px;background:linear-gradient(180deg,rgba(2,6,23,0.95),#071426);padding:10px 22px;border-top:1px solid rgba(255,255,255,0.02);display:none;flex-direction:column}
+      nav.open{display:flex}
+      .menu-toggle{display:block}
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="#">Abdrahman</a>
+    <div class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></div>
+    <nav id="navMenu">
+      <a href="#" class="active">Home</a>
+      <a href="#services">Services</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-img card">
+        <img src="triple a.jpg" alt="Profile picture">
+      </div>
+      <div class="hero-content">
+        <h1>Hi, I'm <span>Abdrahman</span></h1>
+        <div class="typing">I'm a <strong id="typed">Full-Stack Developer</strong></div>
+        <p>I’m a Full-Stack Developer with over 2 years of experience building scalable frontends, backends, APIs, and cloud systems. I also work on hardware and IoT projects, including home automation and smart water-level systems. I create clear, professional technical reports and institutional project documentation to deliver complete, real-world solutions.</p>
+
+        <div class="actions">
+          <a class="btn primary" href="#projects">See Projects</a>
+          <a class="btn ghost" id="hireBtn">Hire me</a>
+          <div class="socials">
+            <a href="https://www.linkedin.com/in/abdrasheed-abdrahman" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/horjase" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://x.com/tripplea3002" target="_blank" rel="noopener noreferrer" title="X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://www.instagram.com/ojaseabdrahman " title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="card">
+        <h2>Services</h2>
+        <p style="color:var(--muted)">What I offer — tailored services combining software, hardware, and documentation.</p>
+        <div class="grid" style="margin-top:16px">
+          <div class="service card">
+            <h3>Full-Stack Development</h3>
+            <p>Frontend, backend, API design, database modelling and cloud deployments.</p>
+          </div>
+          <div class="service card">
+            <h3>IoT & Embedded Systems</h3>
+            <p>Hardware design, microcontrollers (Arduino/ESP), sensors and actuator integration.</p>
+          </div>
+          <div class="service card">
+            <h3>Technical Reports & Documentation</h3>
+            <p>Institutional project reports, SIWES writeups, and engineering documentation.</p>
+          </div>
+          <div class="service card">
+            <h3>Blockchain Integration</h3>
+            <p>Smart contract integration and decentralized storage (on demand).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="card">
+        <h2>Skills</h2>
+        <p style="color:var(--muted)">Core tools and technologies I use.</p>
+        <div style="margin-top:16px">
+          <div class="skill">
+            <div class="meta"><span>JavaScript / TypeScript</span><span>90%</span></div>
+            <div class="bar"><i style="width:90%"></i></div>
+          </div>
+          <div class="skill">
+            <div class="meta"><span>React / Next.js</span><span>85%</span></div>
+            <div class="bar"><i style="width:85%"></i></div>
+          </div>
+          <div class="skill">
+            <div class="meta"><span>Node.js / Express</span><span>80%</span></div>
+            <div class="bar"><i style="width:80%"></i></div>
+          </div>
+          <div class="skill">
+            <div class="meta"><span>Databases (Postgres, MongoDB)</span><span>78%</span></div>
+            <div class="bar"><i style="width:78%"></i></div>
+          </div>
+          <div class="skill">
+            <div class="meta"><span>IoT (ESP/Arduino)</span><span>76%</span></div>
+            <div class="bar"><i style="width:76%"></i></div>
+          </div>
+          <div class="skill">
+            <div class="meta"><span>Cloud & DevOps</span><span>70%</span></div>
+            <div class="bar"><i style="width:70%"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="card">
+        <h2>Selected Projects</h2>
+        <p style="color:var(--muted)">Real-world builds combining software + hardware.</p>
+        <div class="projects-grid" style="margin-top:16px">
+
+          <article class="project-card card">
+            <img src="smart water.png" style="width: 800; height: 400;" alt="Smart Water Level">
+            <h4>Smart Water-Level Monitoring</h4>
+            <p>ESP8266 sensor + cloud dashboard to track tank levels and send alerts. Includes SMS/Push notifications and data logging.</p>
+            <div style="margin-top:10px"><a class="btn ghost" href="#">View details</a></div>
+          </article>
+
+          <article class="project-card card">
+            <img src="home automation.png" alt="Home Automation">
+            <h4>Home Automation</h4>
+            <p>Web interface to control lights and appliances via relays and MQTT; mobile-friendly dashboard and scheduling.</p>
+            <div style="margin-top:10px"><a class="btn ghost" href="#">View details</a></div>
+          </article>
+
+          <article class="project-card card">
+            <img src="image.png" alt="SIWES Report">
+            <h4>Institutional SIWES Reports</h4>
+            <p>Complete SIWES and technical reports (weekly breakdowns, methods, results) for lab and field projects.</p>
+            <div style="margin-top:10px"><a class="btn ghost" href="#">Download</a></div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+   <section id="contact" class="contact-section">
+  <h2>Contact Me</h2>
+
+  <div class="contact-container">
+
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <p><strong>Email:</strong> abdrahmanojase@gmail.com</p>
+      <p><strong>WhatsApp:</strong> 08079229749</p>
+    </div>
+
+    <!-- Contact Form -->
+    <form id="contactForm" class="contact-form">
+      <div class="input-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+      </div>
+
+      <div class="input-group">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Type your message" required></textarea>
+      </div>
+
+      <button type="submit" class="send-btn">Send Message</button>
+    </form>
+  </div>
+</section>
+
+
+  </main>
+
+  <footer>
+    <div style="max-width:1100px;margin:0 auto;padding:10px">© <span id="year"></span> Abdrahman. </div>
+  </footer>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="box">
+      <h3>Let's work together</h3>
+      <p style="color:var(--muted)">Email me at <a href="abdrasheedabdrahman2@gmail.com">abdrasheedabdrahman2@gmail.com</a> or call +234 807 922 9749</p>
+      <div style="text-align:right;margin-top:10px"><button class="btn ghost" id="closePopup">Close</button></div>
+    </div>
+  </div>
+
+ <!-- EmailJS Library -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+
+<!-- Include EmailJS library before your script -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+  // ===========================
+  // Initialize EmailJS
+  // ===========================
+  emailjs.init("WYm0Uwx2u0jFEc6xV"); // Your public key
+
+  // ===========================
+  // Header menu toggle for mobile
+  // ===========================
+  const menuToggle = document.getElementById('menuToggle');
+  const navMenu = document.getElementById('navMenu');
+  menuToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
+
+  // ===========================
+  // Popup handling
+  // ===========================
+  const hireBtn = document.getElementById('hireBtn');
+  const popup = document.getElementById('popup');
+  const closePopup = document.getElementById('closePopup');
+
+  hireBtn.addEventListener('click', () => popup.classList.add('open'));
+  closePopup.addEventListener('click', () => popup.classList.remove('open'));
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) popup.classList.remove('open');
+  });
+
+  // ===========================
+  // Contact form: EmailJS sending
+  // ===========================
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const params = {
+          from_name: document.getElementById("name").value,
+          reply_to: document.getElementById("email").value,
+          message: document.getElementById("message").value
+      };
+
+      emailjs.send("service_t9lsqi7", "template_sdnjqjq", params)
+      .then(() => {
+          alert("✅ Message sent successfully!");
+          contactForm.reset();
+      })
+      .catch(err => {
+          console.error("EmailJS Error:", err.text || err);
+          alert("❌ Failed to send message. Check console for details.");
+      });
+  });
+
+  // ===========================
+  // Small utilities
+  // ===========================
+  // Update year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Typing effect (simple)
+  const typed = document.getElementById('typed');
+  const phrases = ['Full-Stack Developer', 'IoT & Embedded Systems', 'Technical Writer'];
+  let pi = 0, ci = 0;
+
+  function typeLoop() {
+      const phrase = phrases[pi];
+      if (ci <= phrase.length) {
+          typed.textContent = phrase.slice(0, ci);
+          ci++;
+          setTimeout(typeLoop, 80);
+      } else {
+          setTimeout(() => {
+              ci = 0;
+              pi = (pi + 1) % phrases.length;
+              typeLoop();
+          }, 1200);
+      }
+  }
+  typeLoop();
+
+  // Close mobile menu after clicking a link
+  document.querySelectorAll('#navMenu a').forEach(a => a.addEventListener('click', () => navMenu.classList.remove('open')));
+</script>
+
+
+</body>
+</html>
