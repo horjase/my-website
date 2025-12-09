@@ -256,7 +256,7 @@
   <div class="popup" id="popup">
     <div class="box">
       <h3>Let's work together</h3>
-      <p style="color:var(--muted)">Email me at <a href="abdrasheedabdrahman2@gmail.com">abdrasheedabdrahman2@gmail.com</a> or call +234 807 922 9749</p>
+      <p style="color:var(--muted)">Email me at <a href="abdrahmanojase@gmail.com">abdrahmanojase@gmail.com</a> or call +234 807 922 9749</p>
       <div style="text-align:right;margin-top:10px"><button class="btn ghost" id="closePopup">Close</button></div>
     </div>
   </div>
@@ -301,13 +301,15 @@
   contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const params = {
-          from_name: document.getElementById("name").value,
-          reply_to: document.getElementById("email").value,
-          message: document.getElementById("message").value
-      };
+   const params = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    message: document.getElementById("message").value
+};
 
-      emailjs.send("service_t9lsqi7", "template_sdnjqjq", params)
+emailjs.send("service_t9lsqi7", "template_sdnjqjq", params)
+
+
       .then(() => {
           alert("✅ Message sent successfully!");
           contactForm.reset();
